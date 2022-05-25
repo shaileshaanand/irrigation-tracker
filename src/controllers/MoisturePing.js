@@ -22,13 +22,13 @@ const listMoisturePings = async (req, res) => {
   Joi.assert(req.query, validator);
   const events = (
     await MoisturePing.find({
-      timestamp: {
+      createdAt: {
         $gte: new Date(parseInt(req.query.start)),
         $lt: new Date(parseInt(req.query.end)),
       },
       sensorId: req.query.sensorId,
     })
-      .sort({ timestamp: "asc" })
+      .sort({ createdAt: "asc" })
       .lean()
   ).map((event) => {
     return sanitize(event);
